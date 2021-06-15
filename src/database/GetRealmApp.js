@@ -1,6 +1,16 @@
 import { BookSchema } from "../schemas/BookSchema"
 import Realm from "realm";
 
-export const realm = await Realm.open({
-    schema: [BookSchema],
-});
+
+export const getRealm = async () => {
+    try {
+        const realm = await Realm.open({
+            path: "BookDb",
+            schema : [BookSchema],
+            schemaVersion: 1
+        });
+        return realm
+    } catch (err){
+        console.error("Failed to open the realm", err.message);
+    }
+}
