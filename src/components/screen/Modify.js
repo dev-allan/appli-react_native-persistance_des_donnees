@@ -1,6 +1,6 @@
 import React from 'react'
-import { StyleSheet, Text, View, StatusBar, Button } from 'react-native'
-import { TextInput, Avatar, Card, IconButton } from 'react-native-paper'
+import { StyleSheet, Text, View, StatusBar, Alert } from 'react-native'
+import { TextInput, Avatar, Card, IconButton, Button } from 'react-native-paper'
 import { getRealm } from '../../database/GetRealmApp'
 
 export default function Modify({route}) {
@@ -12,13 +12,18 @@ export default function Modify({route}) {
 
   const modifyBook = async () => {
     const realm = await getRealm();
-    realm.write(() => {
-      realm.create(
-        "Book",
-        { _id: id, author: auteur,  category: categorie, title: titre},
-        "modified"
-      );
-    });
+    try{
+      realm.write(() => {
+        realm.create(
+          "Book",
+          { _id: id, author: auteur,  category: categorie, title: titre},
+          "modified"
+        );
+      });
+      Alert.alert('Livre modifié')
+    }catch(error){
+      console.error(error);
+    }
   }
 
   return (
@@ -41,7 +46,23 @@ export default function Modify({route}) {
             onChangeText={categorie => setCategorie(categorie)}
           />
 
-          <Button title="Modifier" onPress={() => modifyBook()}/>
+          {/* <Button title="Modifier" onPress={() => modifyBook()}/> */}
+          <Button style={styles.btnModify} icon="pencil-plus" mode="contained" onPress={() => modifyBook()}>
+            Modifier
+        </Button>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+      // flex: 1,
+  },
+
+  btnModify:{
+    width: 200,
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    marginTop: 20,
+  }
+});

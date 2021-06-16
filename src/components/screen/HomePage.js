@@ -5,6 +5,8 @@ import 'react-native-get-random-values'
 import { getRealm } from '../../database/GetRealmApp'
 import { BSON } from 'realm'
 import 'react-native-get-random-values'
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview'
+import { useIsFocused } from '@react-navigation/native';
 
 
 export default function HomePage({ navigation }) {
@@ -12,6 +14,8 @@ export default function HomePage({ navigation }) {
     const [author, setAuthor] = React.useState('');
     const [category, setCategory] = React.useState('');
     const [listBook, setListBook] = React.useState([]);
+
+    useIsFocused()
 
     const getRealmApp = async () => {
         const realm = await getRealm();
@@ -57,29 +61,26 @@ export default function HomePage({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <FlatList
-                data={listBook}
-                renderItem={renderItem}
-                keyExtractor={(item, index) => 'd' + index.toString()}
-            />
-            <View style={styles.containerForm}>
-                <TextInput
-                    label="Titre du livre"
-                    value={titre}
-                    onChangeText={titre => setTitre(titre)}
-                />
+                        <View style={styles.containerForm}>
+                <KeyboardAwareScrollView style={styles.container}>
+                    <TextInput
+                        label="Titre du livre"
+                        value={titre}
+                        onChangeText={titre => setTitre(titre)}
+                    />
 
-                <TextInput
-                    label="Auteur"
-                    value={author}
-                    onChangeText={author => setAuthor(author)}
-                />
+                    <TextInput
+                        label="Auteur"
+                        value={author}
+                        onChangeText={author => setAuthor(author)}
+                    />
 
-                <TextInput
-                    label="Catégorie"
-                    value={category}
-                    onChangeText={category => setCategory(category)}
-                />
+                    <TextInput
+                        label="Catégorie"
+                        value={category}
+                        onChangeText={category => setCategory(category)}
+                    />
+                </KeyboardAwareScrollView>
             </View> 
             <View style={styles.containerBtn}>
                 <Button style={styles.btnAdd} icon="plus-thick" mode="contained" onPress={() => getRealmApp()}>
@@ -89,6 +90,11 @@ export default function HomePage({ navigation }) {
                     supprimer
                 </Button>
             </View>
+            <FlatList
+                data={listBook}
+                renderItem={renderItem}
+                keyExtractor={(item, index) => 'd' + index.toString()}
+            />
         </View>
     );
 }
@@ -96,12 +102,11 @@ export default function HomePage({ navigation }) {
 
 const styles = StyleSheet.create({
     container: {
-    //   marginTop: 30,
-    //   marginBottom: 'auto',
+        // flex: 1,
     },
 
     containerForm: {
-        marginTop: '50%',
+        // marginTop: '50%',
     },
 
     containerBtn:{
