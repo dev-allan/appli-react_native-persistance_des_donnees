@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { View, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
+import { SafeAreaView, ScrollView, View, StyleSheet, FlatList, TouchableOpacity, RefreshControl } from 'react-native'
 import { TextInput, Avatar, Card, Button } from 'react-native-paper'
 import 'react-native-get-random-values'
 import { getRealm } from '../../database/GetRealmApp'
@@ -9,7 +9,18 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview'
 import { useIsFocused } from '@react-navigation/native';
 
 
+const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  }
+
 export default function HomePage({ navigation }) {
+    const [refreshing, setRefreshing] = React.useState(false);
+
+    const onRefresh = React.useCallback(() => {
+      setRefreshing(true);
+      wait(100).then(() => setRefreshing(false));
+    }, []);
+
     const [titre, setTitre] = React.useState('')
     const [author, setAuthor] = React.useState('');
     const [category, setCategory] = React.useState('');
@@ -29,6 +40,7 @@ export default function HomePage({ navigation }) {
                 author: author, 
                 category: category });
         })
+        onRefresh()
         return book
     };
 
@@ -37,6 +49,7 @@ export default function HomePage({ navigation }) {
         realm.write(() => {
             realm.deleteAll();
           });
+        onRefresh()
     }
 
     useEffect(async() => {
@@ -60,8 +73,16 @@ export default function HomePage({ navigation }) {
       );
 
     return (
-        <View style={styles.container}>
-                        <View style={styles.containerForm}>
+        <SafeAreaView>
+            <ScrollView
+            refreshControl={
+                <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                />
+                }
+            >
+                <View style={styles.containerForm}>
                 <KeyboardAwareScrollView style={styles.container}>
                     <TextInput
                         label="Titre du livre"
@@ -81,21 +102,22 @@ export default function HomePage({ navigation }) {
                         onChangeText={category => setCategory(category)}
                     />
                 </KeyboardAwareScrollView>
-            </View> 
-            <View style={styles.containerBtn}>
-                <Button style={styles.btnAdd} icon="plus-thick" mode="contained" onPress={() => getRealmApp()}>
-                    Ajouter
-                </Button>
-                <Button style={styles.btnRemove} icon="trash-can" mode="contained" onPress={() => deleteData()}>
-                    supprimer
-                </Button>
-            </View>
-            <FlatList
-                data={listBook}
-                renderItem={renderItem}
-                keyExtractor={(item, index) => 'd' + index.toString()}
-            />
-        </View>
+                </View> 
+                <View style={styles.containerBtn}>
+                        <Button style={styles.btnAdd} icon="plus-thick" mode="contained" onPress={() => getRealmApp()}>
+                            Ajouter
+                        </Button>
+                        <Button style={styles.btnRemove} icon="trash-can" mode="contained" onPress={() => deleteData()}>
+                            supprimer
+                        </Button>
+                    </View>
+                    <FlatList
+                        data={listBook}
+                        renderItem={renderItem}
+                        keyExtractor={(item, index) => 'd' + index.toString()}
+                    />
+            </ScrollView>
+        </SafeAreaView>
     );
 }
 
