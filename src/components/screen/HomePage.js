@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { View, Button, StyleSheet, FlatList, Text, TouchableOpacity } from 'react-native'
+import { View, Button, StyleSheet, FlatList, Text, TouchableOpacity, Alert } from 'react-native'
 import { TextInput, Avatar, Card, IconButton } from 'react-native-paper'
 
 import { BookSchema } from '../../schemas/BookSchema'
@@ -9,13 +9,6 @@ import { getRealm } from '../../database/GetRealmApp'
 import { BSON } from 'realm'
 import 'react-native-get-random-values'
 
-// const Item = ({ title, author, category }) => (
-//     <View style={styles.item}>
-//       <Text style={styles.title}>{title}</Text>
-//       <Text>{author}</Text>
-//       <Text>{category}</Text>
-//     </View>
-//   );
 
 export default function HomePage({ navigation }) {
     const [titre, setTitre] = React.useState('')
@@ -53,19 +46,15 @@ export default function HomePage({ navigation }) {
 
       const renderItem = ({ item }) => (
         <View>
-            <TouchableOpacity onPress={() => navigation.navigate('Detail')}>
+            <TouchableOpacity onPress={() => navigation.navigate('Detail', {
+                itemId : item._id
+            })}>
                 <Card.Title
                     title={item.title}
                     subtitle={item.author}
                     left={(props) => <Avatar.Icon {...props} icon="book" />}
                 />
             </TouchableOpacity>
-        </View>
-      );
-
-      const Item = ({ title }) => (
-        <View style={styles.item}>
-          <Text style={styles.title}>{title}</Text>
         </View>
       );
 
