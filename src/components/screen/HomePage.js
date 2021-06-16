@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
-import { View, Button, StyleSheet, FlatList, Text } from 'react-native'
-import { TextInput } from 'react-native-paper'
+import { View, Button, StyleSheet, FlatList, Text, TouchableOpacity } from 'react-native'
+import { TextInput, Avatar, Card, IconButton } from 'react-native-paper'
 
 import { BookSchema } from '../../schemas/BookSchema'
 import realm from "../../database/GetRealmApp"
@@ -17,7 +17,7 @@ import 'react-native-get-random-values'
 //     </View>
 //   );
 
-export default function HomePage() {
+export default function HomePage({ navigation }) {
     const [titre, setTitre] = React.useState('')
     const [author, setAuthor] = React.useState('');
     const [category, setCategory] = React.useState('');
@@ -53,20 +53,19 @@ export default function HomePage() {
 
       const renderItem = ({ item }) => (
         <View>
-            <Text>Titre : </Text>
-            <Item title={item.title} />
-            <Text>Auteur : </Text>
-            <Item author={item.author}/>
-            <Text>Categorie : </Text>
-            <Item category={item.category}/>
+            <TouchableOpacity onPress={() => navigation.navigate('Detail')}>
+                <Card.Title
+                    title={item.title}
+                    subtitle={item.author}
+                    left={(props) => <Avatar.Icon {...props} icon="book" />}
+                />
+            </TouchableOpacity>
         </View>
       );
 
-      const Item = ({ title, author, category }) => (
+      const Item = ({ title }) => (
         <View style={styles.item}>
           <Text style={styles.title}>{title}</Text>
-          <Text>{author}</Text>
-          <Text>{category}</Text>
         </View>
       );
 

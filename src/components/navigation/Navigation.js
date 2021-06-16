@@ -1,22 +1,22 @@
-import 'react-native-gesture-handler';
-import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import 'react-native-gesture-handler'
+import * as React from 'react'
+import { NavigationContainer } from '@react-navigation/native'
 import HomePage from '../screen/HomePage'
 import Detail from '../screen/Detail'
 import Modify from '../screen/Modify'
+import { createStackNavigator } from '@react-navigation/stack'
 
-const Tab = createMaterialBottomTabNavigator();
+const Stack = createStackNavigator();
 
 
 export default function Navigation() {
   return (
     <NavigationContainer>
-        <Tab.Navigator>
-            <Tab.Screen name="HomePage" component={HomePage} />
-            <Tab.Screen name="Detail" component={Detail} />
-            <Tab.Screen name="Modify" component={Modify}/>
-        </Tab.Navigator>
+        <Stack.Navigator>
+            <Stack.Screen name="HomePage" component={HomePage} />
+            <Stack.Screen name="Detail" component={Detail} />
+            <Stack.Screen name="Modify" component={Modify}/>
+        </Stack.Navigator>
     </NavigationContainer>
   );
 }
