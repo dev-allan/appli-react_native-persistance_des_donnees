@@ -1,9 +1,6 @@
 import React, { useEffect } from 'react'
-import { View, Button, StyleSheet, FlatList, Text, TouchableOpacity, Alert } from 'react-native'
-import { TextInput, Avatar, Card, IconButton } from 'react-native-paper'
-
-import { BookSchema } from '../../schemas/BookSchema'
-import realm from "../../database/GetRealmApp"
+import { View, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
+import { TextInput, Avatar, Card, Button } from 'react-native-paper'
 import 'react-native-get-random-values'
 import { getRealm } from '../../database/GetRealmApp'
 import { BSON } from 'realm'
@@ -60,32 +57,38 @@ export default function HomePage({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <TextInput
-                label="Titre du livre"
-                value={titre}
-                onChangeText={titre => setTitre(titre)}
-            />
-
-            <TextInput
-                label="Auteur"
-                value={author}
-                onChangeText={author => setAuthor(author)}
-            />
-
-            <TextInput
-                label="Catégorie"
-                value={category}
-                onChangeText={category => setCategory(category)}
-            />
-
-            <Button title="Ajouter" onPress={() => getRealmApp()}/>
-            <Button title="Supprimer tout" onPress={() => deleteData()}/>
-
             <FlatList
                 data={listBook}
                 renderItem={renderItem}
                 keyExtractor={(item, index) => 'd' + index.toString()}
-            /> 
+            />
+            <View style={styles.containerForm}>
+                <TextInput
+                    label="Titre du livre"
+                    value={titre}
+                    onChangeText={titre => setTitre(titre)}
+                />
+
+                <TextInput
+                    label="Auteur"
+                    value={author}
+                    onChangeText={author => setAuthor(author)}
+                />
+
+                <TextInput
+                    label="Catégorie"
+                    value={category}
+                    onChangeText={category => setCategory(category)}
+                />
+            </View> 
+            <View style={styles.containerBtn}>
+                <Button style={styles.btnAdd} icon="plus-thick" mode="contained" onPress={() => getRealmApp()}>
+                    Ajouter
+                </Button>
+                <Button style={styles.btnRemove} icon="trash-can" mode="contained" onPress={() => deleteData()}>
+                    supprimer
+                </Button>
+            </View>
         </View>
     );
 }
@@ -96,4 +99,23 @@ const styles = StyleSheet.create({
     //   marginTop: 30,
     //   marginBottom: 'auto',
     },
+
+    containerForm: {
+        marginTop: '50%',
+    },
+
+    containerBtn:{
+        marginTop: 10,
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        flexDirection: 'row'
+    },
+
+    btnAdd:{
+        marginRight: 10,
+    },
+
+    btnRemove: {
+        backgroundColor: 'red',
+    }
   });
