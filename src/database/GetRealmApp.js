@@ -1,4 +1,4 @@
-import { BookSchema } from "../schemas/BookSchema"
+import { BookSchema, CategorySchema } from "../schemas/BookSchema"
 import Realm from "realm";
 
 

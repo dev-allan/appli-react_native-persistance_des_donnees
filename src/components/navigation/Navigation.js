@@ -15,7 +15,7 @@ export default function Navigation() {
         <Stack.Navigator>
             <Stack.Screen name="HomePage" component={HomePage} />
             <Stack.Screen name="Detail" component={Detail} />
-            <Stack.Screen name="Modify" component={Modify}/>
+            <Stack.Screen name="Modify" component={Modify} />
         </Stack.Navigator>
     </NavigationContainer>
   );

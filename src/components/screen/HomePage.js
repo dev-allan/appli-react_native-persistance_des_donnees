@@ -5,7 +5,6 @@ import 'react-native-get-random-values'
 import { getRealm } from '../../database/GetRealmApp'
 import { BSON } from 'realm'
 import 'react-native-get-random-values'
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview'
 import { useIsFocused } from '@react-navigation/native';
 
 
@@ -26,12 +25,9 @@ export default function HomePage({ navigation }) {
     const [category, setCategory] = React.useState('');
     const [listBook, setListBook] = React.useState([]);
 
-    useIsFocused()
 
     const getRealmApp = async () => {
         const realm = await getRealm();
-        const book = realm.objects('Book');
-        console.log(book)
         let addBook;
         realm.write(() => {
             addBook = realm.create("Book", {
@@ -41,7 +37,6 @@ export default function HomePage({ navigation }) {
                 category: category });
         })
         onRefresh()
-        return book
     };
 
     const deleteData = async () => {
@@ -67,72 +62,61 @@ export default function HomePage({ navigation }) {
                     title={item.title}
                     subtitle={item.author}
                     left={(props) => <Avatar.Icon {...props} icon="book" />}
-                />
+                  />
             </TouchableOpacity>
         </View>
       );
 
+      useIsFocused();
+
     return (
         <SafeAreaView>
-            <ScrollView
-            refreshControl={
-                <RefreshControl
-                    refreshing={refreshing}
-                    onRefresh={onRefresh}
+            <View style={styles.containerForm}>
+                <TextInput
+                    label="Titre du livre"
+                    value={titre}
+                    onChangeText={titre => setTitre(titre)}
                 />
+
+                <TextInput
+                    label="Auteur"
+                    value={author}
+                    onChangeText={author => setAuthor(author)}
+                />
+
+                <TextInput
+                    label="Catégorie"
+                    value={category}
+                    onChangeText={category => setCategory(category)}
+                />
+            </View>
+            <View style={styles.containerBtn}>
+                <Button style={styles.btnAdd} icon="plus-thick" mode="contained" onPress={() => getRealmApp()}>
+                    Ajouter
+                </Button>
+                <Button style={styles.btnRemove} icon="trash-can" mode="contained" onPress={() => deleteData()}>
+                    supprimer
+                </Button>
+            </View>
+            <FlatList
+                data={listBook}
+                renderItem={renderItem}
+                keyExtractor={item => item._id}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />
                 }
-            >
-                <View style={styles.containerForm}>
-                <KeyboardAwareScrollView style={styles.container}>
-                    <TextInput
-                        label="Titre du livre"
-                        value={titre}
-                        onChangeText={titre => setTitre(titre)}
-                    />
-
-                    <TextInput
-                        label="Auteur"
-                        value={author}
-                        onChangeText={author => setAuthor(author)}
-                    />
-
-                    <TextInput
-                        label="Catégorie"
-                        value={category}
-                        onChangeText={category => setCategory(category)}
-                    />
-                </KeyboardAwareScrollView>
-                </View> 
-                <View style={styles.containerBtn}>
-                        <Button style={styles.btnAdd} icon="plus-thick" mode="contained" onPress={() => getRealmApp()}>
-                            Ajouter
-                        </Button>
-                        <Button style={styles.btnRemove} icon="trash-can" mode="contained" onPress={() => deleteData()}>
-                            supprimer
-                        </Button>
-                    </View>
-                    <FlatList
-                        data={listBook}
-                        renderItem={renderItem}
-                        keyExtractor={(item, index) => 'd' + index.toString()}
-                    />
-            </ScrollView>
+            />
         </SafeAreaView>
     );
 }
 
 
 const styles = StyleSheet.create({
-    container: {
-        // flex: 1,
-    },
-
-    containerForm: {
-        // marginTop: '50%',
-    },
 
     containerBtn:{
-        marginTop: 10,
         marginLeft: 'auto',
         marginRight: 'auto',
         flexDirection: 'row'
@@ -144,5 +128,5 @@ const styles = StyleSheet.create({
 
     btnRemove: {
         backgroundColor: 'red',
-    }
+    },
   });

@@ -8,3 +8,12 @@ export const BookSchema = {
   },
   primaryKey: '_id',
 };
+
+export const CategorySchema = {
+  name : "Category",
+  properties: {
+    _id: "objectId",
+    category: "string",
+  },
+  primaryKey: "_id",
+}

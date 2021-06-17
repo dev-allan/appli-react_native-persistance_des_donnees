@@ -2,6 +2,7 @@ import React, {useEffect} from 'react'
 import { StyleSheet, Text, View, StatusBar } from 'react-native'
 import { Card, Title, Paragraph, Button } from 'react-native-paper'
 import { getRealm } from '../../database/GetRealmApp'
+import { useIsFocused } from '@react-navigation/native'
 
 export default function Detail({route, navigation}) {
   const { itemId } = route.params
@@ -16,11 +17,12 @@ export default function Detail({route, navigation}) {
   }
 
   useEffect(async() => {
-    const id = itemId
     const realm = await getRealm();
-    const book = realm.objectForPrimaryKey("Book", id); 
+    const book = realm.objectForPrimaryKey("Book", itemId); 
     setBook(book)
   },[]);
+
+  useIsFocused();
 
   return (
     <View style={styles.container}>
