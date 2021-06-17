@@ -26,39 +26,43 @@ export default function Detail({route, navigation}) {
 
   return (
     <View style={styles.container}>
-      <Card>
-      <Card.Content>
-        <Title>{book.title}</Title>
-        <Paragraph>{book.author}</Paragraph>
-        <Paragraph>{book.category}</Paragraph>
-      </Card.Content>
-    </Card>
-    <View style={styles.containerBtn}>
-        <Button style={styles.btnModify} icon="pencil-plus" mode="contained" onPress={() => navigation.navigate('Modify',{
+      <Card           
+        style={{
+            backgroundColor:"#4F4A41",
+            borderRadius: 15,
+            margin: 10,
+          }}>
+        <Card.Content>
+          <Title style={{color: '#FEC551', fontSize: 30, textAlign: 'center'}}>{book.title}</Title>
+          <Paragraph style={{color: 'white', textAlign: 'center'}}>{book.author}</Paragraph>
+          <Paragraph style={{color: 'white', textAlign: 'center'}}>{book.category}</Paragraph>
+        </Card.Content>
+      </Card>
+      <View style={styles.containerBtn}>
+        <Button style={styles.btnModify} icon="pencil-plus" mode="contained" onPress={() => navigation.navigate('Modify', {
           id: itemId,
-          title : book.title,
-          category : book.category,
-          author : book.author
+          title: book.title,
+          category: book.category,
+          author: book.author
         })}>
-            Modifier
+          Modifier
         </Button>
 
         <Button style={styles.btnRemove} icon="trash-can" mode="contained" onPress={() => {
           deleteBook(),
-          navigation.navigate('HomePage')
+            navigation.navigate('HomePage')
         }}>
-            Supprimer
+          Supprimer
         </Button>
       </View>
-  </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    // marginLeft: 'auto',
-    // marginRight: 'auto',
-    marginTop: 50,
+    backgroundColor: '#FEC551',
+    height: '100%'
   },
 
   containerBtn:{

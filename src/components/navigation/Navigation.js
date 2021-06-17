@@ -13,14 +13,34 @@ export default function Navigation() {
   return (
     <NavigationContainer>
         <Stack.Navigator>
-            <Stack.Screen name="HomePage" component={HomePage} options={{
-              title:"Accueil",
-              headerStyle:{
-                backgroundColor: '#FEC551'
+            <Stack.Screen 
+              name="HomePage" 
+              component={HomePage} 
+              options={{
+                title:"Accueil",
+                headerStyle:{
+                  backgroundColor: '#FEC551'
               }
             }}/>
-            <Stack.Screen name="Detail" component={Detail} />
-            <Stack.Screen name="Modify" component={Modify} />
+            <Stack.Screen 
+              name="Detail" 
+              component={Detail} 
+              options={{
+                title:"Détail du livre",
+                headerStyle:{
+                  backgroundColor: '#FEC551'
+                }
+            }}/>
+            <Stack.Screen 
+              name="Modify" 
+              component={Modify}
+              options={{
+                title:"Modifier le livre",
+                headerStyle:{
+                  backgroundColor: '#FEC551'
+                }
+            }}  
+              />
         </Stack.Navigator>
     </NavigationContainer>
   );

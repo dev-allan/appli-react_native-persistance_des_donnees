@@ -27,36 +27,45 @@ export default function Modify({route}) {
   }
 
   return (
-    <View>
-          <TextInput
-            label="Titre du livre"
-            value={titre}
-            onChangeText={titre => setTitre(titre)}
-          />
+    <View style={styles.container}>
+      <TextInput
+        label="Titre du livre"
+        value={titre}
+        onChangeText={titre => setTitre(titre)}
+        style={{
+          backgroundColor: '#F8D69A'
+        }}
+      />
 
-          <TextInput
-            label="Auteur"
-            value={auteur}
-            onChangeText={auteur => setAuteur(auteur)}
-          />
+      <TextInput
+        label="Auteur"
+        value={auteur}
+        onChangeText={auteur => setAuteur(auteur)}
+        style={{
+          backgroundColor: '#F8D69A'
+        }}
+      />
 
-          <TextInput
-            label="Catégorie"
-            value={categorie}
-            onChangeText={categorie => setCategorie(categorie)}
-          />
+      <TextInput
+        label="Catégorie"
+        value={categorie}
+        onChangeText={categorie => setCategorie(categorie)}
+        style={{
+          backgroundColor: '#F8D69A'
+        }}
+      />
 
-          {/* <Button title="Modifier" onPress={() => modifyBook()}/> */}
-          <Button style={styles.btnModify} icon="pencil-plus" mode="contained" onPress={() => modifyBook()}>
-            Modifier
-        </Button>
+      <Button style={styles.btnModify} icon="pencil-plus" mode="contained" onPress={() => modifyBook()}>
+        Modifier
+      </Button>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-      // flex: 1,
+      height: '100%',
+      backgroundColor: '#FEC551'
   },
 
   btnModify:{

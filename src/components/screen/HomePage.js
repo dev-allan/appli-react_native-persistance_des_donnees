@@ -150,7 +150,6 @@ const styles = StyleSheet.create({
     containerBtn:{
         justifyContent: 'center',
         flexDirection: 'row',
-        // backgroundColor: '',
         width: '100%',
         marginTop: 10,
         marginBottom: 10,
@@ -158,7 +157,6 @@ const styles = StyleSheet.create({
 
     btnAdd:{
         marginRight: 10,
-        backgroundColor: '#4F4A41'
     },
 
     btnRemove: {
