@@ -6,6 +6,7 @@ import { getRealm } from '../../database/GetRealmApp'
 import { BSON } from 'realm'
 import 'react-native-get-random-values'
 import { useIsFocused } from '@react-navigation/native';
+import { back } from 'react-native/Libraries/Animated/Easing'
 
 
 const wait = (timeout) => {
@@ -62,6 +63,17 @@ export default function HomePage({ navigation }) {
                     title={item.title}
                     subtitle={item.author}
                     left={(props) => <Avatar.Icon {...props} icon="book" />}
+                    style={{
+                        backgroundColor:"#4F4A41",
+                        margin: 10,
+                        borderRadius: 15,
+                    }}
+                    titleStyle={{
+                        color: '#FEC551',
+                    }}
+                    subtitleStyle={{
+                        color: 'white',
+                    }}
                   />
             </TouchableOpacity>
         </View>
@@ -71,44 +83,58 @@ export default function HomePage({ navigation }) {
 
     return (
         <SafeAreaView>
-            <View style={styles.containerForm}>
-                <TextInput
-                    label="Titre du livre"
-                    value={titre}
-                    onChangeText={titre => setTitre(titre)}
-                />
-
-                <TextInput
-                    label="Auteur"
-                    value={author}
-                    onChangeText={author => setAuthor(author)}
-                />
-
-                <TextInput
-                    label="Catégorie"
-                    value={category}
-                    onChangeText={category => setCategory(category)}
-                />
-            </View>
-            <View style={styles.containerBtn}>
-                <Button style={styles.btnAdd} icon="plus-thick" mode="contained" onPress={() => getRealmApp()}>
-                    Ajouter
-                </Button>
-                <Button style={styles.btnRemove} icon="trash-can" mode="contained" onPress={() => deleteData()}>
-                    supprimer
-                </Button>
-            </View>
-            <FlatList
-                data={listBook}
-                renderItem={renderItem}
-                keyExtractor={item => item._id}
-                refreshControl={
-                    <RefreshControl
-                        refreshing={refreshing}
-                        onRefresh={onRefresh}
+            <View style={styles.container}>
+                <View style={styles.containerForm}>
+                    <TextInput
+                        label="Titre du livre"
+                        value={titre}
+                        onChangeText={titre => setTitre(titre)}
+                        selectionColor= 'black'
+                        style={{
+                            backgroundColor:'#F8D69A'
+                        }}
                     />
-                }
-            />
+
+                    <TextInput
+                        label="Auteur"
+                        value={author}
+                        onChangeText={author => setAuthor(author)}
+                        selectionColor= 'black'
+                        style={{
+                            backgroundColor:'#F8D69A'
+                        }}
+                    />
+
+                    <TextInput
+                        label="Catégorie"
+                        value={category}
+                        onChangeText={category => setCategory(category)}
+                        selectionColor= 'black'
+                        style={{
+                            backgroundColor:'#F8D69A'
+                        }}
+                    />
+                </View>
+                <View style={styles.containerBtn}>
+                    <Button style={styles.btnAdd} icon="plus-thick" mode="contained" onPress={() => getRealmApp()}>
+                        Ajouter
+                    </Button>
+                    <Button style={styles.btnRemove} icon="trash-can" mode="contained" onPress={() => deleteData()}>
+                        supprimer
+                    </Button>
+                </View>
+                <FlatList
+                    data={listBook}
+                    renderItem={renderItem}
+                    keyExtractor={item => item._id}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={refreshing}
+                            onRefresh={onRefresh}
+                        />
+                    }
+                />
+            </View>
         </SafeAreaView>
     );
 }
@@ -116,14 +142,23 @@ export default function HomePage({ navigation }) {
 
 const styles = StyleSheet.create({
 
+    container: {
+        backgroundColor: "#FEC551",
+        height: '100%'
+    },
+
     containerBtn:{
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        flexDirection: 'row'
+        justifyContent: 'center',
+        flexDirection: 'row',
+        // backgroundColor: '',
+        width: '100%',
+        marginTop: 10,
+        marginBottom: 10,
     },
 
     btnAdd:{
         marginRight: 10,
+        backgroundColor: '#4F4A41'
     },
 
     btnRemove: {

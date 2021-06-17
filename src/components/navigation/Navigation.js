@@ -13,7 +13,12 @@ export default function Navigation() {
   return (
     <NavigationContainer>
         <Stack.Navigator>
-            <Stack.Screen name="HomePage" component={HomePage} />
+            <Stack.Screen name="HomePage" component={HomePage} options={{
+              title:"Accueil",
+              headerStyle:{
+                backgroundColor: '#FEC551'
+              }
+            }}/>
             <Stack.Screen name="Detail" component={Detail} />
             <Stack.Screen name="Modify" component={Modify} />
         </Stack.Navigator>
